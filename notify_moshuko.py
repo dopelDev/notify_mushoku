@@ -1,3 +1,5 @@
+#!/home/dopel/venv/notify/bin/python
+
 from methods import compare_last_episode, save_csv
 from notifypy import Notify
 import argparse
@@ -24,8 +26,8 @@ def main():
     args = arguments()
     print(args)
     interval = 60 * args.interval
-    timeout = (args.timeout * 60) / args.interval
-    while(len(timeout)):
+    timeout = int((args.timeout * 60) / args.interval)
+    while(range(timeout)):
         notification_main()
         sleep(interval)
             
