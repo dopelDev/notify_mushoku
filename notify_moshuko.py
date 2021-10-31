@@ -1,6 +1,6 @@
 #!/home/dopel/venv/notify/bin/python
 
-from methods import compare_last_episode, save_csv
+from methods import compare_last_episode, save_csv, getting
 from notifypy import Notify
 import argparse
 from time import sleep
@@ -27,13 +27,15 @@ def main():
     print(args)
     interval = 60 * args.interval
     timeout = int((args.timeout * 60) / args.interval)
-    while(range(timeout)):
+    for _ in range(timeout):
         notification_main()
+        if(args.update) and not compare_last_episode('list_episodes.csv'):
+            _, list_episodes = getting()
+            save_csv(list_episodes)
+
         sleep(interval)
             
-    if(args.update):
-        save_csv('list_episodes.csv')
-
+    
 
 if __name__ == '__main__':
     main()
