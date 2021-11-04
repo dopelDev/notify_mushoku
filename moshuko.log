@@ -1,0 +1,6 @@
+INFO:root:message 5
+2021-11-04 14:58:14,712:INFO:message 5
+2021-11-04 15:06:53,406:INFO:arguments choice : 
+2021-11-04 15:06:54,402:INFO:message 5
+2021-11-04 15:09:13,645:INFO:arguments choice : Namespace(interval=10, update=False, timeout=8)
+2021-11-04 15:09:14,584:INFO:message 5

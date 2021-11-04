@@ -5,6 +5,12 @@ from json import loads
 from typing import NamedTuple, Dict, List
 from csv import writer
 import pandas as pd
+import logging
+
+def log_config(args):
+    format_config = '%(asctime)s:%(levelname)s:%(message)s'
+    logging.basicConfig(level=logging.INFO, filename='moshuko.log', format=format_config)
+    logging.info('arguments choice : {}'.format(args))
 
 class Results(NamedTuple):
     last_episode : Dict
@@ -33,7 +39,7 @@ def save_csv(list_episodes : List):
 def compare_last_episode(path : str) -> bool :
     data_Frame = pd.read_csv(path)
     last_episode, _ = getting()
-    
+    logging.info('message {}'.format(last_episode['number'])) 
     # pasar data_Frame como str porque al salir de pandas sale como numpy Number
 
     return True if last_episode['number'] == str(data_Frame.iloc[-1].at['number']) else False
