@@ -6,10 +6,12 @@ from typing import NamedTuple, Dict, List
 from csv import writer
 import pandas as pd
 import logging
+from os.path import exists
+from os import getcwd
 
 def log_config(args):
     format_config = '%(asctime)s:%(levelname)s:%(message)s'
-    logging.basicConfig(level=logging.INFO, filename='moshuko.log', format=format_config)
+    logging.basicConfig(level=logging.INFO, filename='moshuko.log', format=format_config, filemode='w')
     logging.info('arguments choice : {}'.format(args))
 
 class Results(NamedTuple):
@@ -39,7 +41,18 @@ def save_csv(list_episodes : List):
 def compare_last_episode(path : str) -> bool :
     data_Frame = pd.read_csv(path)
     last_episode, _ = getting()
-    logging.info('message {}'.format(last_episode['number'])) 
+    logging.info('el ultimo episodio es : {}'.format(last_episode['number'])) 
     # pasar data_Frame como str porque al salir de pandas sale como numpy Number
 
     return True if last_episode['number'] == str(data_Frame.iloc[-1].at['number']) else False
+
+def exists_csv():
+    path = getcwd()
+    if exists(path + '/list_episodes.csv'):
+        pass
+    else:
+        result_list = get('https://jkanime.net/ajax/pagination_episodes/2951/1/')
+        result_list_json = loads(result_list.text)
+        save_csv(result_list_json)
+        logging.info('No existia la lista de episodios. Se a creado una')
+

@@ -1,6 +1,6 @@
 #!/home/dopel/venv/notify/bin/python
 
-from methods import compare_last_episode, save_csv, getting, log_config
+from methods import compare_last_episode, save_csv, getting, log_config, exists_csv
 from notifypy import Notify
 import argparse
 from time import sleep
@@ -18,7 +18,8 @@ def notification_main():
     notification = Notify()
     notification.message = 'Ya salio un nuevo episodio'
     notification.title = 'Mushoku Jobless'
-
+    
+    exists_csv()
     if not compare_last_episode('list_episodes.csv'):
         notification.send()
 
